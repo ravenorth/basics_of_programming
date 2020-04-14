@@ -55,7 +55,7 @@ BEGIN {Stat}
             Min := N;
           IF N > Max
           THEN
-            Max := N;
+            Max := N
         END
       ELSE
         OverFlow := TRUE
