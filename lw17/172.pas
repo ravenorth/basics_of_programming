@@ -30,7 +30,7 @@ BEGIN{ReadNumber}
   WHILE ((D <> -1) AND (N <> -1))
   DO
     BEGIN
-      IF ((D  <= (Max - N * 10)) AND (D <> -1))
+      IF (D  <= (Max - N * 10)) 
       THEN
         N := N * 10 + D 
       ELSE
