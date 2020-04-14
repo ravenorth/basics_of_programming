@@ -42,7 +42,7 @@ BEGIN {AverageScore}
               READ(NextScore);
               IF (NextScore > 100) OR (NextScore < 0)
               THEN
-                Error := TRUE;
+                Error := TRUE
             END
           ELSE
             IF WhichScore <= NumberOfScores
