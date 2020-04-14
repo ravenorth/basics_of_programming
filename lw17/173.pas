@@ -71,14 +71,3 @@ BEGIN {Stat}
   ELSE
     WRITELN('OVERFLOW ERROR')
 END. {Stat}
-
-
-
-
-
-
-
-
-
-
-
