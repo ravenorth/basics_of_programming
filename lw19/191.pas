@@ -6,7 +6,7 @@ BEGIN {Prime}
   Min := 2;
   Max := 100;
   Sieve := [Min .. Max]; 
-  WRITE('Простые числа в диапазоне до ', Max, ': ', Min, ' ');
+  WRITE('ГЏГ°Г®Г±ГІГ»ГҐ Г·ГЁГ±Г«Г  Гў Г¤ГЁГ ГЇГ Г§Г®Г­ГҐ Г¤Г® ', Max, ': ', Min, ' ');
   WHILE (Min < Max)
   DO
     BEGIN
