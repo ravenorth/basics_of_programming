@@ -27,9 +27,7 @@ BEGIN {AverageScore}
           THEN
             READ(NextScore)
           ELSE
-            IF WhichScore <= NumberOfScores
-            THEN 
-              Error := TRUE;
+            Error := TRUE;
           TotalScore := TotalScore + NextScore;
           WhichScore := WhichScore + 1
         END;
