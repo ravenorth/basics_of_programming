@@ -9,52 +9,38 @@ VAR
   Student: 1 .. ClassSize;
   NextScore: Score;
   Ave, TotalScore, ClassTotal: INTEGER;
-  Error: BOOLEAN;
 BEGIN {AverageScore}
-  Error := FALSE;
   ClassTotal := 0;
   WRITELN('Enter students scores:');
   Student := 1;
-  WHILE (Student <= ClassSize) AND (Error = FALSE)
+  WHILE (Student <= ClassSize) 
   DO 
     BEGIN
       TotalScore := 0;
       WhichScore := 1;
-      WHILE (WhichScore <= NumberOfScores) AND (Error = FALSE)
+      WHILE (WhichScore <= NumberOfScores)
       DO
         BEGIN
           IF NOT EOLN
           THEN
-            READ(NextScore)
-          ELSE
-            Error := TRUE;
+            READ(NextScore);
           TotalScore := TotalScore + NextScore;
           WhichScore := WhichScore + 1
         END;
       READLN;
-      IF (Error = FALSE)
+      TotalScore := TotalScore * 10;
+      Ave := TotalScore DIV NumberOfScores;
+      WRITE('Student average: ');
+      IF Ave MOD 10 >= 5
       THEN
-        BEGIN
-          TotalScore := TotalScore * 10;
-          Ave := TotalScore DIV NumberOfScores;
-          WRITE('Student average: ');
-          IF Ave MOD 10 >= 5
-          THEN
-            WRITELN(Ave DIV 10 + 1)
-          ELSE
-            WRITELN(Ave DIV 10);
-          ClassTotal := ClassTotal + TotalScore;
-          Student := Student + 1
-        END
+        WRITELN(Ave DIV 10 + 1)
+      ELSE
+        WRITELN(Ave DIV 10);
+      ClassTotal := ClassTotal + TotalScore;
+      Student := Student + 1
     END;
-  IF (Error = FALSE)
-  THEN
-    BEGIN
-      WRITELN;
-      WRITE('Class average: ');
-      ClassTotal := ClassTotal DIV (ClassSize * NumberOfScores);
-      WRITELN(ClassTotal DIV 10, '.', ClassTotal MOD 10:1) 
-    END
-  ELSE
-    WRITELN('INPUT ERROR')
+  WRITELN;
+  WRITE('Class average: ');
+  ClassTotal := ClassTotal DIV (ClassSize * NumberOfScores);
+  WRITELN(ClassTotal DIV 10, '.', ClassTotal MOD 10:1) 
 END.{AverageScore}
