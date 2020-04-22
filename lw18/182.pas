@@ -20,8 +20,7 @@ BEGIN{ReadName}
     BEGIN
       WRITE(FOut, Ch);
       READ(FIn, Ch) 
-    END;
-  WRITE(FOut, ': ')
+    END
 END;{ReadName}
 
 BEGIN {AverageScore}
@@ -35,6 +34,7 @@ BEGIN {AverageScore}
       TotalScore := 0;
       WhichScore := 1;
       ReadName(INPUT, OUTPUT);
+      WRITE(': ');
       WHILE (WhichScore <= NumberOfScores) AND (NOT Error)
       DO
         BEGIN
