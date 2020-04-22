@@ -10,7 +10,7 @@ VAR
   Ch: CHAR;
 BEGIN {ReadDigit}
   Digit := -1;
-  IF NOT EOLN(FIn)
+  IF NOT EOLN
   THEN
     READ(Ch);
   IF Ch = '0' THEN Digit := 0 ELSE
