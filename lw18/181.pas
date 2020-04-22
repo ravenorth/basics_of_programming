@@ -18,7 +18,7 @@ BEGIN {AverageScore}
     BEGIN
       TotalScore := 0;
       WhichScore := 1;
-      WHILE (WhichScore <= NumberOfScores)
+      WHILE (WhichScore <= NumberOfScores) AND (NOT EOLN)
       DO
         BEGIN
           IF NOT EOLN
