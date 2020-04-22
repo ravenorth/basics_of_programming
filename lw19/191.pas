@@ -1,34 +1,34 @@
 PROGRAM Prime(INPUT, OUTPUT);
 CONST
-  MinSieve = 2;
-  MaxSieve = 100;
+  SieveMin = 2;
+  SieveMax = 100;
 VAR  
-  Sieve: SET OF MinSieve .. MaxSieve;
-  MinNow, MaxNow, CheckNumber: MinSieve .. MaxSieve;
+  Sieve: SET OF SieveMin .. SieveMax;
+  NewMin, NewMax, CheckNumber: SieveMin .. SieveMax;
 BEGIN {Prime}
-  MinNow := MinSieve;
-  MaxNow := MaxSieve;
-  Sieve := [MinSieve .. MaxSieve]; 
-  WRITE('Ïðîñòûå ÷èñëà â äèàïàçîíå äî ', MaxSieve, ': ', MinSieve, ' ');
-  WHILE (MinNow < MaxNow)
+  NewMin := SieveMin;
+  NewMax := SieveMax;
+  Sieve := [SieveMin .. SieveMax]; 
+  WRITE('Prime numbers in the range up to ', SieveMax, ': ', SieveMin, ' ');
+  WHILE (NewMin < NewMax)
   DO
     BEGIN
-      CheckNumber := MinNow;
-      WHILE CheckNumber <= MaxNow
+      CheckNumber := NewMin;
+      WHILE CheckNumber <= NewMax
       DO
         BEGIN 
-          IF (CheckNumber MOD MinNow = 0)
+          IF (CheckNumber MOD NewMin = 0)
           THEN
             Sieve := Sieve - [CheckNumber]; 
           CheckNumber := CheckNumber + 1 
         END;
-      WHILE NOT (MaxNow IN Sieve)
+      WHILE NOT (NewMax IN Sieve)
       DO
-        MaxNow := MaxNow - 1;
-      WHILE NOT (MinNow IN Sieve)
+        NewMax := NewMax - 1;
+      WHILE NOT (NewMin IN Sieve)
       DO
-        MinNow := MinNow + 1;
-      WRITE(MinNow, ' ')
+        NewMin := NewMin + 1;
+      WRITE(NewMin, ' ')
     END;
   WRITELN
 END.{Prime}
