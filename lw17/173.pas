@@ -45,7 +45,7 @@ BEGIN {Stat}
   Min := MaxInteger;
   Max := 0;
   OverFlow := FALSE;
-  WHILE (NOT OverFlow)
+  WHILE (NOT EOLN) AND (NOT OverFlow)
   DO
     BEGIN
       ReadNumber(INPUT, Number);
