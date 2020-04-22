@@ -15,7 +15,7 @@ BEGIN{ReadName}
   IF NOT EOLN(FIn)
   THEN
     READ(FIn, Ch); 
-  WHILE ((NOT EOLN) AND (((Ch <= 'Z') AND (Ch >= 'A')) OR ((Ch <= 'z') AND (Ch >= 'a'))))
+  WHILE ((NOT EOLN(FIn)) AND (((Ch <= 'Z') AND (Ch >= 'A')) OR ((Ch <= 'z') AND (Ch >= 'a'))))
   DO
     BEGIN
       WRITE(FOut, Ch);
