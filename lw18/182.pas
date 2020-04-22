@@ -27,13 +27,13 @@ BEGIN {AverageScore}
   ClassTotal := 0;
   WRITELN('Enter students scores:');
   Student := 1;
-  WHILE (Student <= ClassSize) AND (Error = FALSE)
+  WHILE (Student <= ClassSize) AND (NOT FALSE)
   DO 
     BEGIN
       TotalScore := 0;
       WhichScore := 1;
       ReadName(INPUT);
-      WHILE (WhichScore <= NumberOfScores) AND (Error = FALSE)
+      WHILE (WhichScore <= NumberOfScores) AND (NOT FALSE)
       DO
         BEGIN
           IF NOT EOLN
@@ -50,7 +50,7 @@ BEGIN {AverageScore}
           WhichScore := WhichScore + 1
         END;
       READLN;
-      IF (Error = FALSE)
+      IF (NOT Error)
       THEN
         BEGIN
           TotalScore := TotalScore * 10;
@@ -65,7 +65,7 @@ BEGIN {AverageScore}
         END
     END;
   WRITELN;
-  IF (Error = FALSE)
+  IF (NOT FALSE)
   THEN
     BEGIN
       WRITE('Class average: ');
