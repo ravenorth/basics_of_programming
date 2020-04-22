@@ -1,31 +1,34 @@
 PROGRAM Prime(INPUT, OUTPUT);
+CONST
+  MinSieve = 2;
+  MaxSieve = 100;
 VAR  
-  Sieve: SET OF 2 .. 100;
-  Min, Max, N: 2 .. 100;
+  Sieve: SET OF MinSieve .. MaxSieve;
+  MinNow, MaxNow, CheckNumber: MinSieve .. MaxSieve;
 BEGIN {Prime}
-  Min := 2;
-  Max := 100;
-  Sieve := [Min .. Max]; 
-  WRITE('Простые числа в диапазоне до ', Max, ': ', Min, ' ');
-  WHILE (Min < Max)
+  MinNow := MinSieve;
+  MaxNow := MaxSieve;
+  Sieve := [MinSieve .. MaxSieve]; 
+  WRITE('Ïðîñòûå ÷èñëà â äèàïàçîíå äî ', MaxSieve, ': ', MinSieve, ' ');
+  WHILE (MinNow < MaxNow)
   DO
     BEGIN
-      N := Min;
-      WHILE N <= Max
+      CheckNumber := MinNow;
+      WHILE CheckNumber <= MaxNow
       DO
         BEGIN 
-          IF (N MOD Min = 0)
+          IF (CheckNumber MOD MinNow = 0)
           THEN
-            Sieve := Sieve - [N]; 
-          N := N + 1 
+            Sieve := Sieve - [CheckNumber]; 
+          CheckNumber := CheckNumber + 1 
         END;
-      WHILE NOT (Max IN Sieve)
+      WHILE NOT (MaxNow IN Sieve)
       DO
-        Max := Max - 1;
-      WHILE NOT (Min IN Sieve)
+        MaxNow := MaxNow - 1;
+      WHILE NOT (MinNow IN Sieve)
       DO
-        Min := Min + 1;
-      WRITE(Min, ' ')
+        MinNow := MinNow + 1;
+      WRITE(MinNow, ' ')
     END;
   WRITELN
 END.{Prime}
