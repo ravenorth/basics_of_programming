@@ -21,7 +21,7 @@ BEGIN{ReadName}
       WRITE(FOut, Ch);
       READ(FIn, Ch) 
     END;
-  WRITE(': ')
+  WRITE(FOut, ': ')
 END;{ReadName}
 
 BEGIN {AverageScore}
