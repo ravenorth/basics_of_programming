@@ -12,7 +12,7 @@ BEGIN {ReadDigit}
   Digit := -1;
   IF NOT EOLN
   THEN
-    READ(Ch);
+    READ(FIn, Ch);
   IF Ch = '0' THEN Digit := 0 ELSE
   IF Ch = '1' THEN Digit := 1 ELSE
   IF Ch = '2' THEN Digit := 2 ELSE
@@ -28,7 +28,7 @@ END; {ReadDigit}
 PROCEDURE ReadNumber(VAR FIn: TEXT; VAR Number: INTEGER); 
 BEGIN{ReadNumber}
   Number := 0;
-  ReadDigit(INPUT, Digit);
+  ReadDigit(FIn, Digit);
   WHILE (Digit <> -1) AND (Number <> -1) 
   DO
     BEGIN
@@ -37,7 +37,7 @@ BEGIN{ReadNumber}
         Number := Number * 10 + Digit 
       ELSE
         Number := -1;  
-      ReadDigit(INPUT, Digit)
+      ReadDigit(FIn, Digit)
     END
 END;{ReadNumber}
 
