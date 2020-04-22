@@ -42,10 +42,10 @@ BEGIN{ReadNumber}
 END;{ReadNumber}
 
 BEGIN {Stat}
-  Min := 32767;
+  Min := MaxInteger;
   Max := 0;
   OverFlow := FALSE;
-  WHILE (NOT EOLN) AND (NOT OverFlow)
+  WHILE (NOT OverFlow)
   DO
     BEGIN
       ReadNumber(INPUT, Number);
