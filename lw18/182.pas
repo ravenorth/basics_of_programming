@@ -6,34 +6,36 @@ VAR
   WhichScore: 1 .. NumberOfScores;
   Student: 1 .. ClassSize;
   NextScore, Ave, TotalScore, ClassTotal: INTEGER;
-  Error: BOOLEAN;
-PROCEDURE ReadName(VAR FIn: TEXT);
+  Error: BOOLEAN;  
+  
+PROCEDURE ReadName(VAR FIn: TEXT; VAR FOut: TEXT);
 VAR
   Ch: CHAR;
 BEGIN{ReadName}
-  IF NOT EOLN
+  IF NOT EOLN(FIn)
   THEN
-    READ(Ch); 
+    READ(FIn, Ch); 
   WHILE ((NOT EOLN) AND (((Ch <= 'Z') AND (Ch >= 'A')) OR ((Ch <= 'z') AND (Ch >= 'a'))))
   DO
     BEGIN
-      WRITE(Ch);
-      READ(Ch) 
+      WRITE(FOut, Ch);
+      READ(FIn, Ch) 
     END;
   WRITE(': ')
 END;{ReadName}
+
 BEGIN {AverageScore}
   Error := FALSE;
   ClassTotal := 0;
   WRITELN('Enter students scores:');
   Student := 1;
-  WHILE (Student <= ClassSize) AND (NOT FALSE)
+  WHILE (Student <= ClassSize) AND (NOT Error)
   DO 
     BEGIN
       TotalScore := 0;
       WhichScore := 1;
-      ReadName(INPUT);
-      WHILE (WhichScore <= NumberOfScores) AND (NOT FALSE)
+      ReadName(INPUT, OUTPUT);
+      WHILE (WhichScore <= NumberOfScores) AND (NOT Error)
       DO
         BEGIN
           IF NOT EOLN
@@ -65,7 +67,7 @@ BEGIN {AverageScore}
         END
     END;
   WRITELN;
-  IF (NOT FALSE)
+  IF (NOT Error)
   THEN
     BEGIN
       WRITE('Class average: ');
