@@ -6,12 +6,14 @@ VAR
   WhichScore: 1 .. NumberOfScores;
   Student: 1 .. ClassSize;
   NextScore, Ave, TotalScore, ClassTotal: INTEGER;
-  Error: BOOLEAN;  
+  Error: BOOLEAN; 
+  Name: TEXT; 
   
 PROCEDURE ReadName(VAR FIn: TEXT; VAR FOut: TEXT);
 VAR
   Ch: CHAR;
 BEGIN{ReadName}
+  REWRITE(FOut);
   IF NOT EOLN(FIn)
   THEN
     READ(FIn, Ch); 
@@ -20,8 +22,22 @@ BEGIN{ReadName}
     BEGIN
       WRITE(FOut, Ch);
       READ(FIn, Ch) 
-    END
+    END;
+  WRITELN(FOut)
 END;{ReadName}
+
+PROCEDURE WriteName(VAR FIn: TEXT; VAR FOut: TEXT);
+VAR
+  Ch: CHAR;
+BEGIN{WriteName}
+  RESET(FIn);
+  WHILE NOT EOLN(FIn)
+  DO
+    BEGIN
+      READ(FIn, Ch);
+      WRITE(FOut, Ch)
+    END
+END;{WriteName}
 
 BEGIN {AverageScore}
   Error := FALSE;
@@ -33,8 +49,7 @@ BEGIN {AverageScore}
     BEGIN
       TotalScore := 0;
       WhichScore := 1;
-      ReadName(INPUT, OUTPUT);
-      WRITE(': ');
+      ReadName(INPUT, Name);
       WHILE (WhichScore <= NumberOfScores) AND (NOT Error)
       DO
         BEGIN
@@ -55,6 +70,8 @@ BEGIN {AverageScore}
       IF (NOT Error)
       THEN
         BEGIN
+          WriteName(Name, OUTPUT);
+          WRITE(': ');
           TotalScore := TotalScore * 10;
           Ave := TotalScore DIV NumberOfScores;
           IF Ave MOD 10 >= 5
