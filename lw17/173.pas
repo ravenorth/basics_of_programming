@@ -12,17 +12,19 @@ BEGIN {ReadDigit}
   Digit := -1;
   IF NOT EOLN(FIn)
   THEN
-    READ(FIn, Ch);
-  IF Ch = '0' THEN Digit := 0 ELSE
-  IF Ch = '1' THEN Digit := 1 ELSE
-  IF Ch = '2' THEN Digit := 2 ELSE
-  IF Ch = '3' THEN Digit := 3 ELSE
-  IF Ch = '4' THEN Digit := 4 ELSE
-  IF Ch = '5' THEN Digit := 5 ELSE
-  IF Ch = '6' THEN Digit := 6 ELSE
-  IF Ch = '7' THEN Digit := 7 ELSE
-  IF Ch = '8' THEN Digit := 8 ELSE
-  IF Ch = '9' THEN Digit := 9
+    BEGIN
+      READ(FIn, Ch);
+      IF Ch = '0' THEN Digit := 0 ELSE
+      IF Ch = '1' THEN Digit := 1 ELSE
+      IF Ch = '2' THEN Digit := 2 ELSE
+      IF Ch = '3' THEN Digit := 3 ELSE
+      IF Ch = '4' THEN Digit := 4 ELSE
+      IF Ch = '5' THEN Digit := 5 ELSE
+      IF Ch = '6' THEN Digit := 6 ELSE
+      IF Ch = '7' THEN Digit := 7 ELSE
+      IF Ch = '8' THEN Digit := 8 ELSE
+      IF Ch = '9' THEN Digit := 9
+    END
 END; {ReadDigit}
 
 PROCEDURE ReadNumber(VAR FIn: TEXT; VAR Number: INTEGER); 
@@ -45,7 +47,7 @@ BEGIN {Stat}
   Min := MaxInteger;
   Max := 0;
   OverFlow := FALSE;
-  WHILE (NOT EOLN) AND (NOT OverFlow)
+  WHILE (NOT EOF(INPUT)) AND (NOT OverFlow)
   DO
     BEGIN
       ReadNumber(INPUT, Number);
@@ -66,12 +68,16 @@ BEGIN {Stat}
     END;
   IF (NOT OverFlow) 
   THEN
-    BEGIN
-      Average := (Sum * 100) DIV Count;
-      WRITELN('Min: ', Min);
-      WRITELN('Max: ', Max);
-      WRITELN('Average: ', Average DIV 100, '.', Average MOD 100)
-    END
+    IF (Count <> 0)
+    THEN
+      BEGIN
+        Average := (Sum * 100) DIV Count;
+        WRITELN('Min: ', Min);
+        WRITELN('Max: ', Max);
+        WRITELN('Average: ', Average DIV 100, '.', Average MOD 100)
+      END
+    ELSE
+      WRITELN('NO DATA')
   ELSE
     WRITELN('OVERFLOW ERROR')
 END. {Stat}
