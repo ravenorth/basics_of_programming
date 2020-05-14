@@ -1,49 +1,50 @@
-PROGRAM XPrintRun(INPUT, OUTPUT);
+PROGRAM XPrint(INPUT, OUTPUT);
 CONST
-  ValidSymbols = ['A' .. 'F'];
+  MatrixRowSize = 5;
 VAR  
   Ch: CHAR;
   
-PROCEDURE XPrint(Ch: CHAR);
+PROCEDURE PrintMatrix(VAR FOut: TEXT; Ch: CHAR);
 VAR
   Matrix: SET OF 1 .. 25;
   I, J: INTEGER;
-BEGIN {XPrint}  
-  Matrix := [];
+BEGIN {PrintMatrix}  
   CASE Ch OF 
     'A': Matrix := [3, 7, 9, 11 .. 16, 20, 21, 25];
     'B': Matrix := [1 .. 4, 6, 10 .. 14, 16, 20 .. 24];
     'C': Matrix := [2 .. 6, 11, 16, 22 .. 25];
     'D': Matrix := [1 .. 4, 6, 10, 11, 15, 16, 20 .. 24];
     'E': Matrix := [1 .. 6, 11 .. 16, 21 .. 25];
-    'F': Matrix := [1 .. 6, 11 .. 16, 21]
-    ELSE WRITE('INVALID SYMBOL') 
+    'F': Matrix := [1 .. 6, 11 .. 16, 21]                                                               
+    ELSE Matrix := []
   END;
   IF (Matrix <> [])
   THEN
-    FOR I := 0 TO 4
+    FOR I := 0 TO (MatrixRowSize - 1)
     DO
       BEGIN                       
-        FOR J := (1 + 5 * I) TO (5 + 5 * I)
+        FOR J := (1 + MatrixRowSize * I) TO (MatrixRowSize + MatrixRowSize * I)
         DO
           IF J IN Matrix
           THEN
-            WRITE('X')
+            WRITE(FOut, 'X')
           ELSE
-            WRITE(' ');
-        WRITELN  
-      END;
-  WRITELN
-END;{XPrint}
+            WRITE(FOut, ' ');
+        WRITELN(FOut)  
+      END
+  ELSE
+     WRITE(FOut, 'INVALID SYMBOL');
+  WRITELN(FOut)
+END;{PrintMatrix}
 
-BEGIN {XPrintRun}
+BEGIN {XPrint}
   WRITE('ENTER SYMBOL: ');
   IF NOT EOLN
   THEN
     BEGIN
       READ(Ch);
-      XPrint(Ch)
+      PrintMatrix(OUTPUT, Ch)
      END
   ELSE
     WRITELN('NO SYMBOL')  
-END.{XPrintRun}
+END.{XPrint}
