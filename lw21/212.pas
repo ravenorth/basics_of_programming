@@ -15,7 +15,7 @@ VAR
  
 PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT);
 VAR
-  CipherValue, TrueValue: CHAR;
+  Value: CHAR;
   Count: INTEGER;
 BEGIN {Initialize}
   Error := FALSE;
@@ -23,16 +23,13 @@ BEGIN {Initialize}
   WHILE (NOT EOLN(FIn)) AND (NOT Error)
   DO 
     BEGIN
-      READ(FIn, CipherValue);
-      IF (CipherValue IN ValidSymbols) AND (NOT EOLN(FIn))
+      READ(FIn, Value);
+      IF (Value IN ValidSymbols) AND (NOT EOLN(FIn))
       THEN
-        BEGIN
-          READ(FIn, TrueValue);
-          Code[CipherValue] := TrueValue
-        END
+        READ(FIn, Code[Value])
       ELSE
         Error := TRUE;
-      Count := Count + 1
+      Count := Count + 1;
     END;
   IF Count <> CodeLength
   THEN
@@ -68,7 +65,6 @@ BEGIN {Encryption}
         DO
           BEGIN
             READ(Msg[I]);
-            WRITE(Msg[I]);
             I := I + 1
           END;
         READLN;
