@@ -1,5 +1,4 @@
 PROGRAM InsertionSort(INPUT, OUTPUT);
-{Сортирует символы из INPUT}
 CONST
   Max = 16;
   ListEnd = 0;
@@ -7,7 +6,7 @@ TYPE
   RecArray = ARRAY [1 .. Max] OF 
                RECORD
                  Key: CHAR;
-                 Next: 0 .. Max;
+                 Next: 0 .. Max
                END;
 VAR
   Arr: RecArray;
@@ -21,19 +20,16 @@ BEGIN {InsertionSort}
   WHILE NOT EOLN      
   DO
     BEGIN
-      {Помещать запись в список, если позволяет пространство, 
-      иначе игнорировать и сообщать об ошибке}
       Index := Index + 1;
       IF Index > Max
       THEN
         BEGIN
           READ(Extra);
-          WRITELN('Сообщение содержит: ', Extra, '. Игнорируем.');
+          WRITELN('Message contains: ', Extra, '. Ignore.')
         END
       ELSE
         BEGIN
           READ(Arr[Index].Key);
-          {Включение Arr[Index] в связанный список}
           Prev := 0;
           Curr := First;
           Found := FALSE;
@@ -48,14 +44,13 @@ BEGIN {InsertionSort}
             ELSE
               Found := True;
           Arr[Index].Next := Curr;
-          IF Prev = 0  {Первый элемент в списке}
+          IF Prev = 0  
           THEN
             First := Index
           ELSE
-            Arr[Prev].Next := Index;
+            Arr[Prev].Next := Index
         END
     END; {WHILE}
-  {Печать списка начиная с Arr[First]}
   Index := First;
   WHILE Index <> ListEnd
   DO
@@ -63,5 +58,5 @@ BEGIN {InsertionSort}
       WRITE(Arr[Index].Key);  
       Index := Arr[Index].Next
     END;
-  WRITELN;   
+  WRITELN   
 END.  {InsertionSort}
