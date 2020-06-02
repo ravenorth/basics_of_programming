@@ -1,8 +1,7 @@
 PROGRAM Encryption(INPUT, OUTPUT);
 CONST
   MaxLength = 20; 
-  ValidSymbols = ['A' .. 'Z', ' '];
-  CodeLength = 27;  
+  ValidSymbols = ['A' .. 'Z', ' ']; 
 TYPE 
   Str = ARRAY [1 .. MaxLength] OF ' ' .. 'Z';
   Cipher = ARRAY [' ' .. 'Z'] OF CHAR;
@@ -18,8 +17,7 @@ PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT; VAR Error: BOOLEAN);
 VAR
   Value: CHAR;
   Values: SET OF CHAR;
-BEGIN {Initialize}
-  
+BEGIN {Initialize} 
   Values := [];
   WHILE (NOT EOF(FIn)) AND (NOT Error)
   DO 
