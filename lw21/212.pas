@@ -14,12 +14,12 @@ VAR
   Error: BOOLEAN;
   CipherFile: TEXT;
  
-PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT);
+PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT; VAR Error: BOOLEAN);
 VAR
   Value: CHAR;
   Values: SET OF CHAR;
 BEGIN {Initialize}
-  Error := FALSE;
+  
   Values := [];
   WHILE (NOT EOF(FIn)) AND (NOT Error)
   DO 
@@ -59,9 +59,10 @@ BEGIN {Encode}
 END;  {Encode}
  
 BEGIN {Encryption}
+  Error := FALSE;
   ASSIGN(CipherFile, 'cipher.txt');
   RESET(CipherFile);
-  Initialize(Code, CipherFile);
+  Initialize(Code, CipherFile, Error);
   CLOSE(CipherFile);
   IF NOT Error
   THEN

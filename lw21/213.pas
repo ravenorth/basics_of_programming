@@ -6,74 +6,82 @@ CONST
 TYPE 
   Str = ARRAY [1 .. MaxLength] OF ' ' .. 'Z';
   Cipher = ARRAY [' ' .. 'Z'] OF CHAR;
+  LengthType = 0 .. MaxLength;
 VAR
   Msg: Str;
   Code: Cipher;
-  I: 1 .. MaxLength;
+  Length: LengthType;
   Error: BOOLEAN;
   CipherFile: TEXT;
   CipherSymbols: SET OF CHAR;
  
-PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT);
+PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT; VAR Error: BOOLEAN);
 VAR
   CipherValue, TrueValue: CHAR;
-  Count: INTEGER;
+  TrueValues: SET OF CHAR;
 BEGIN {Initialize}
   Error := FALSE;
-  Count := 0;
-  WHILE (NOT EOLN(FIn)) AND (NOT Error)
+  TrueValues := [];
+  WHILE (NOT EOF(FIn)) AND (NOT Error)
   DO 
     BEGIN
-      READ(FIn, CipherValue);
-      IF (CipherValue IN ValidSymbols) AND (NOT EOLN(FIn))
+      IF (NOT EOLN(FIn))
       THEN
         BEGIN
           READ(FIn, TrueValue);
-          CipherSymbols := CipherSymbols + [TrueValue];
-          Code[TrueValue] := CipherValue
+          TrueValues := TrueValues + [TrueValue];
+          IF (NOT EOLN(FIn))
+          THEN
+            BEGIN
+              READ(FIn, CipherValue);
+              CipherSymbols := CipherSymbols + [CipherValue];
+              Code[CipherValue] := TrueValue
+            END
+          ELSE
+            Error := TRUE
         END
       ELSE
         Error := TRUE;
-      Count := Count + 1
+      READLN(FIn);
     END;
-  IF Count <> CodeLength
+  IF TrueValues <> ValidSymbols
   THEN
-    Error := TRUE;
+    Error := TRUE
 END; {Initialize}
  
-PROCEDURE Decode(VAR S: Str);
+PROCEDURE Decode(MsgStr: Str; Length: LengthType);
 VAR
-  Index: 1 .. MaxLength;
+  I: LengthType;
 BEGIN {Decode}
-  FOR Index := 1 TO MaxLength
+  FOR I := 1 TO Length
   DO
-    IF S[Index] IN CipherSymbols
+    IF MsgStr[I] IN CipherSymbols
     THEN
-      WRITE(Code[S[Index]])
+      WRITE(Code[MsgStr[I]])
     ELSE
-      WRITE(S[Index]);
+      WRITE(MsgStr[I]);
   WRITELN
 END;  {Decode}
  
 BEGIN {Decryption}
   ASSIGN(CipherFile, 'cipher.txt');
   RESET(CipherFile);
-  Initialize(Code, CipherFile);
+  Initialize(Code, CipherFile, Error);
   CLOSE(CipherFile);
   IF NOT Error
   THEN
     WHILE NOT EOF
     DO
       BEGIN
-        I := 1;
-        WHILE (NOT EOLN) AND (I <= MaxLength)
+        Length := 0;
+        WHILE (NOT EOLN) AND (Length < MaxLength)
         DO
           BEGIN
-            READ(Msg[I]);
-            I := I + 1
+            Length := Length + 1;
+            READ(Msg[Length])
           END;
         READLN;
-        Decode(Msg)
+        Decode(Msg, Length)
       END
   ELSE
     WRITELN('CIPHER FILE ERROR')
