@@ -42,7 +42,7 @@ BEGIN {Initialize}
   Code[' '] := '&'
 END;  {Initialize}
  
-PROCEDURE Encode(VAR S: Str; Length: LengthType);
+PROCEDURE Encode(S: Str; Length: LengthType);
 VAR
   I: LengthType;
 BEGIN {Encode}
