@@ -7,7 +7,7 @@ VAR
 PROCEDURE PrintMatrix(VAR FOut: TEXT; Ch: CHAR);
 VAR
   Matrix: SET OF 1 .. 25;
-  I, J: INTEGER;
+  I: INTEGER;
 BEGIN {PrintMatrix}  
   CASE Ch OF 
     'A': Matrix := [3, 7, 9, 11 .. 16, 20, 21, 25];
@@ -20,17 +20,17 @@ BEGIN {PrintMatrix}
   END;
   IF (Matrix <> [])
   THEN
-    FOR I := 0 TO (MatrixRowSize - 1)
+    FOR I := 1 TO (MatrixRowSize * MatrixRowSize)
     DO
       BEGIN                       
-        FOR J := (1 + MatrixRowSize * I) TO (MatrixRowSize + MatrixRowSize * I)
-        DO
-          IF J IN Matrix
-          THEN
-            WRITE(FOut, 'X')
-          ELSE
-            WRITE(FOut, ' ');
-        WRITELN(FOut)  
+        IF I IN Matrix
+        THEN
+          WRITE(FOut, 'X')
+        ELSE
+          WRITE(FOut, ' ');
+        IF (I MOD MatrixRowSize = 0)
+        THEN
+          WRITELN(FOut)  
       END
   ELSE
      WRITE(FOut, 'INVALID SYMBOL');
