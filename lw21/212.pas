@@ -1,52 +1,60 @@
 PROGRAM Encryption(INPUT, OUTPUT);
 CONST
   MaxLength = 20; 
-  ValidSymbols = [' ', 'A' .. 'Z'];
+  ValidSymbols = ['A' .. 'Z', ' '];
   CodeLength = 27;  
 TYPE 
   Str = ARRAY [1 .. MaxLength] OF ' ' .. 'Z';
   Cipher = ARRAY [' ' .. 'Z'] OF CHAR;
+  LengthType = 0 .. MaxLength;
 VAR
   Msg: Str;
   Code: Cipher;
-  I: 1 .. MaxLength;
+  Length: LengthType;
   Error: BOOLEAN;
   CipherFile: TEXT;
  
 PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT);
 VAR
   Value: CHAR;
-  Count: INTEGER;
+  Values: SET OF CHAR;
 BEGIN {Initialize}
   Error := FALSE;
-  Count := 0;
-  WHILE (NOT EOLN(FIn)) AND (NOT Error)
+  Values := [];
+  WHILE (NOT EOF(FIn)) AND (NOT Error)
   DO 
     BEGIN
-      READ(FIn, Value);
-      IF (Value IN ValidSymbols) AND (NOT EOLN(FIn))
+      IF (NOT EOLN(FIn))
       THEN
-        READ(FIn, Code[Value])
+        BEGIN
+          READ(FIn, Value);
+          Values := Values + [Value];
+          IF (NOT EOLN(FIn))
+          THEN
+            READ(FIn, Code[Value])
+          ELSE
+            Error := TRUE
+        END
       ELSE
         Error := TRUE;
-      Count := Count + 1;
+      READLN(FIn);    
     END;
-  IF Count <> CodeLength
+  IF Values <> ValidSymbols
   THEN
     Error := TRUE;
 END;  {Initialize}
  
-PROCEDURE Encode(VAR S: Str);
+PROCEDURE Encode(MsgStr: Str; Length: LengthType);
 VAR
-  Index: 1 .. MaxLength;
+  I: LengthType;
 BEGIN {Encode}
-  FOR Index := 1 TO MaxLength
+  FOR I := 1 TO Length
   DO
-    IF S[Index] IN ValidSymbols
+    IF MsgStr[I] IN ValidSymbols
     THEN
-      WRITE(Code[S[Index]])
+      WRITE(Code[MsgStr[I]])
     ELSE
-      WRITE(S[Index]);
+      WRITE(MsgStr[I]);
   WRITELN
 END;  {Encode}
  
@@ -60,15 +68,15 @@ BEGIN {Encryption}
     WHILE NOT EOF
     DO
       BEGIN
-        I := 1;
-        WHILE (NOT EOLN) AND (I <= MaxLength)
+        Length := 0;
+        WHILE (NOT EOLN) AND (Length < MaxLength)
         DO
           BEGIN
-            READ(Msg[I]);
-            I := I + 1
+            Length := Length + 1;
+            READ(Msg[Length])
           END;
         READLN;
-        Encode(Msg)
+        Encode(Msg, Length)
       END
   ELSE
     WRITELN('CIPHER FILE ERROR')
