@@ -5,10 +5,11 @@ CONST
 TYPE 
   Str = ARRAY [1 .. MaxLength] OF ' ' .. 'Z';
   Cipher = ARRAY [' ' .. 'Z'] OF CHAR;
+  LengthType = 0 .. MaxLength;
 VAR
   Msg: Str;
   Code: Cipher;
-  I: 1 .. MaxLength;
+  Length: LengthType;
  
 PROCEDURE Initialize(VAR Code: Cipher);
 BEGIN {Initialize}
@@ -41,17 +42,17 @@ BEGIN {Initialize}
   Code[' '] := '&'
 END;  {Initialize}
  
-PROCEDURE Encode(VAR S: Str);
+PROCEDURE Encode(VAR S: Str; Length: LengthType);
 VAR
-  Index: 1 .. MaxLength;
+  I: LengthType;
 BEGIN {Encode}
-  FOR Index := 1 TO MaxLength
+  FOR I := 1 TO Length
   DO
-    IF S[Index] IN ValidSymbols
+    IF S[I] IN ValidSymbols
     THEN
-      WRITE(Code[S[Index]])
+      WRITE(Code[S[I]])
     ELSE
-      WRITE(S[Index]);
+      WRITE(S[I]);
   WRITELN
 END;  {Encode}
  
@@ -60,14 +61,14 @@ BEGIN {Encryption}
   WHILE NOT EOF
   DO
     BEGIN
-      I := 1;
-      WHILE (NOT EOLN) AND (I <= MaxLength)
+      Length := 0;
+      WHILE (NOT EOLN) AND (Length < MaxLength)
       DO
         BEGIN
-          READ(Msg[I]);
-          I := I + 1
+          Length := Length + 1;
+          READ(Msg[Length])
         END;
       READLN;
-      Encode(Msg)
+      Encode(Msg, Length)
     END
 END.  {Encryption}
