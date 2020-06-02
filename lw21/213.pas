@@ -7,18 +7,19 @@ TYPE
   Str = ARRAY [1 .. MaxLength] OF ' ' .. 'Z';
   Cipher = ARRAY [' ' .. 'Z'] OF CHAR;
   LengthType = 0 .. MaxLength;
+  SetType = SET OF CHAR;
 VAR
   Msg: Str;
   Code: Cipher;
   Length: LengthType;
   Error: BOOLEAN;
   CipherFile: TEXT;
-  CipherSymbols: SET OF CHAR;
+  CipherSymbols: SetType;
  
-PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT; VAR Error: BOOLEAN);
+PROCEDURE Initialize(VAR Code: Cipher; VAR FIn: TEXT; VAR Error: BOOLEAN; VAR CipherSymbols: SetType);
 VAR
   CipherValue, TrueValue: CHAR;
-  TrueValues: SET OF CHAR;
+  TrueValues: SetType;
 BEGIN {Initialize}
   Error := FALSE;
   TrueValues := [];
@@ -49,7 +50,7 @@ BEGIN {Initialize}
     Error := TRUE
 END; {Initialize}
  
-PROCEDURE Decode(MsgStr: Str; Length: LengthType);
+PROCEDURE Decode(MsgStr: Str; Length: LengthType; CipherSymbols: SetType);
 VAR
   I: LengthType;
 BEGIN {Decode}
@@ -64,9 +65,11 @@ BEGIN {Decode}
 END;  {Decode}
  
 BEGIN {Decryption}
+  Error := FALSE;
+  CipherSymbols := [];
   ASSIGN(CipherFile, 'cipher.txt');
   RESET(CipherFile);
-  Initialize(Code, CipherFile, Error);
+  Initialize(Code, CipherFile, Error, CipherSymbols);
   CLOSE(CipherFile);
   IF NOT Error
   THEN
@@ -81,7 +84,7 @@ BEGIN {Decryption}
             READ(Msg[Length])
           END;
         READLN;
-        Decode(Msg, Length)
+        Decode(Msg, Length, CipherSymbols)
       END
   ELSE
     WRITELN('CIPHER FILE ERROR')
