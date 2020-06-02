@@ -42,17 +42,17 @@ BEGIN {Initialize}
   Code[' '] := '&'
 END;  {Initialize}
  
-PROCEDURE Encode(S: Str; Length: LengthType);
+PROCEDURE Encode(MsgStr: Str; Length: LengthType);
 VAR
   I: LengthType;
 BEGIN {Encode}
   FOR I := 1 TO Length
   DO
-    IF S[I] IN ValidSymbols
+    IF MsgStr[I] IN ValidSymbols
     THEN
-      WRITE(Code[S[I]])
+      WRITE(Code[MsgStr[I]])
     ELSE
-      WRITE(S[I]);
+      WRITE(MsgStr[I]);
   WRITELN
 END;  {Encode}
  
