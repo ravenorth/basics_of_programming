@@ -5,19 +5,19 @@ CONST
   ValidSymbols = ['A' .. 'F'];
 TYPE
   MatrixType = SET OF 1 .. 250;
-  CipherType = ARRAY ['A' .. 'F'] OF MatrixType;
+  GlyphType = ARRAY ['A' .. 'F'] OF MatrixType;
 VAR  
-  Cipher: CipherType;
-  CipherFile: TEXT;
+  Glyph: GlyphType;
+  GlyphFile: TEXT;
   Length: INTEGER;
 
-FUNCTION ReadCipher(VAR FIn: TEXT): CipherType;
+FUNCTION ReadGlyph(VAR FIn: TEXT): GlyphType;
 VAR
   Ch: CHAR;
   MatrixElement, I: INTEGER;
   Matrix: MatrixType;
-  Matrices: CipherType;
-BEGIN {ReadCipher}
+  Matrices: GlyphType;
+BEGIN {ReadGlyph}
   WHILE NOT EOF(FIn)
   DO
     BEGIN
@@ -32,10 +32,10 @@ BEGIN {ReadCipher}
       READLN(FIn);
       Matrices[Ch] := Matrix
     END;
-  ReadCipher := Matrices
-END; {ReadCipher}
+  ReadGlyph := Matrices
+END; {ReadGlyph}
 
-FUNCTION StringToMatrix(VAR FIn: TEXT; Cipher: CipherType): MatrixType;
+FUNCTION StringToMatrix(VAR FIn: TEXT; Glyph: GlyphType): MatrixType;
 VAR
   Ch: CHAR;
   I: INTEGER;
@@ -51,7 +51,7 @@ BEGIN {StringToMatrix}
       THEN
         FOR I := 1 TO (MatrixRowSize * MatrixRowSize)
         DO
-          IF I IN Cipher[Ch]
+          IF I IN Glyph[Ch]
           THEN
             Matrix := Matrix + [I + Length * MatrixRowSize * MatrixRowSize];
       Length := Length + 1  
@@ -85,10 +85,10 @@ BEGIN {ReadMatrices}
 END; {ReadMatrices}
   
 BEGIN {XPrint}
-  ASSIGN(CipherFile, 'matrices.txt');
-  RESET(CipherFile);
-  Cipher := ReadCipher(CipherFile);
-  CLOSE(CipherFile);
+  ASSIGN(GlyphFile, 'matrices.txt');
+  RESET(GlyphFile);
+  Glyph := ReadGlyph(GlyphFile);
+  CLOSE(GlyphFile);
   WRITE('ENTER SYMBOLS: ');
-  XPrint(OUTPUT, StringToMatrix(INPUT, Cipher)) 
+  XPrint(OUTPUT, StringToMatrix(INPUT, Glyph)) 
 END.{XPrint}
