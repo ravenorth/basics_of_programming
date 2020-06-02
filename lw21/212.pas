@@ -1,7 +1,7 @@
 PROGRAM Encryption(INPUT, OUTPUT);
 CONST
   MaxLength = 20; 
-  ValidSymbols = ['A' .. 'Z', ' ']; 
+  ValidSymbols = ['A' .. 'Z', ' '];
 TYPE 
   Str = ARRAY [1 .. MaxLength] OF ' ' .. 'Z';
   Cipher = ARRAY [' ' .. 'Z'] OF CHAR;
