@@ -1,4 +1,5 @@
 PROGRAM InsertionSort(INPUT, OUTPUT);
+{Сортирует символы из INPUT}
 CONST
   Max = 16;
   ListEnd = 0;
@@ -20,22 +21,25 @@ BEGIN {InsertionSort}
   WHILE NOT EOLN      
   DO
     BEGIN
+      {Помещать запись в список, если позволяет пространство, 
+      иначе игнорировать и сообщать об ошибке}
       Index := Index + 1;
       IF Index > Max
       THEN
         BEGIN
           READ(Extra);
-          WRITELN('Message contains: ', Extra, '. Ignore.')
+          WRITELN('Message contains: ', Extra, '. Ignored.')
         END
       ELSE
         BEGIN
           READ(Arr[Index].Key);
+          {Включение Arr[Index] в связанный список}
           Prev := 0;
           Curr := First;
           Found := FALSE;
           WHILE (Curr <> 0) AND NOT Found
           DO
-            IF Arr[Index]. Key > Arr[Curr].Key
+            IF Arr[Index].Key > Arr[Curr].Key
             THEN
               BEGIN
                 Prev := Curr;
@@ -44,13 +48,14 @@ BEGIN {InsertionSort}
             ELSE
               Found := True;
           Arr[Index].Next := Curr;
-          IF Prev = 0  
+          IF Prev = 0  {Первый элемент в списке}
           THEN
             First := Index
           ELSE
             Arr[Prev].Next := Index
         END
     END; {WHILE}
+  {Печать списка начиная с Arr[First]}
   Index := First;
   WHILE Index <> ListEnd
   DO
