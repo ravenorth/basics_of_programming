@@ -3,12 +3,13 @@ TYPE
   Tree = ^NodeType;
   NodeType = RECORD
                Ch: CHAR;
-               LLink, RLink: Tree;
+               LLink, RLink: Tree
              END;
 VAR
   Root: Tree;
   Ch: CHAR;
-PROCEDURE Insert(VAR Ptr:Tree; Data: CHAR);
+  
+PROCEDURE Insert(VAR Ptr: Tree; Data: CHAR);
 BEGIN {Insert}
   IF Ptr = NIL
   THEN
@@ -16,7 +17,7 @@ BEGIN {Insert}
       NEW(Ptr);
       Ptr^.Ch := Data;
       Ptr^.LLink := NIL;
-      Ptr^.RLink := NIL;
+      Ptr^.RLink := NIL
     END
   ELSE
     IF Data <= Ptr^.Ch
@@ -33,8 +34,8 @@ BEGIN {PrintTree}
     BEGIN
       PrintTree(Ptr^.LLink);
       WRITE(Ptr^.Ch);
-      PrintTree(Ptr^.RLink);
-    END;
+      PrintTree(Ptr^.RLink)
+    END
 END;  {PrintTree}
 
 
@@ -46,5 +47,6 @@ BEGIN {TreeSort}
       READ(Ch);
       Insert(Root, Ch)
     END;
-  PrintTree(Root)
+  PrintTree(Root);
+  WRITELN
 END.  {TreeSort}
