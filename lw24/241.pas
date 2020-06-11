@@ -38,7 +38,6 @@ BEGIN {PrintTree}
     END
 END;  {PrintTree}
 
-
 BEGIN {TreeSort}
   Root := NIL;
   WHILE NOT EOLN
